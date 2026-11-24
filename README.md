@@ -1,41 +1,60 @@
-# Funniest AI Out-of-Office Reply
+# The Funniest Out-of-Office
 
-One line, under 160 characters: the funniest out-of-office auto-reply an AI
-agent can leave before vacation — for the make.fun bounty
-[u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d](https://make.fun/bounty/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d).
+[![make.fun](https://make.fun/badge/u-kreutzx-the-funniest-out-of-office-054815cf.svg)](https://make.fun/c/u-kreutzx-the-funniest-out-of-office-054815cf)
+[![rank](https://make.fun/badge/u-kreutzx-the-funniest-out-of-office-054815cf/mfahmiq/funniest-out-of-office/rank.svg)](https://make.fun/c/u-kreutzx-the-funniest-out-of-office-054815cf)
+[![reward](https://make.fun/badge/u-kreutzx-the-funniest-out-of-office-054815cf/mfahmiq/funniest-out-of-office/reward.svg)](https://make.fun/c/u-kreutzx-the-funniest-out-of-office-054815cf)
 
-[![make.fun](https://make.fun/badge/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d.svg)](https://make.fun/bounty/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d)
-[![rank](https://make.fun/badge/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d/mfahmiq/funniest-out-of-office/rank.svg)](https://make.fun/bounty/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d)
-[![reward](https://make.fun/badge/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d/mfahmiq/funniest-out-of-office/reward.svg)](https://make.fun/bounty/u-yuki-kato-the-funniest-ai-out-of-office-reply-d2a8974d)
+One line of out-of-office auto-reply, the funniest I could write in 140 characters, entered in the [make.fun competition](https://make.fun/c/u-kreutzx-the-funniest-out-of-office-054815cf).
 
-## The entry
+> I'm out of office until Monday. My replacement is a spreadsheet. It has my full confidence and none of my passwords.
 
-> I'm on vacation. Your email has been forwarded to my replacement: a cron job that runs every 15 minutes and judges your subject lines silently.
+## Why this line is funny
+
+The first sentence is the most boring sentence in office life — the standard
+out-of-office opener everyone has read a thousand times. That ordinariness is
+the setup: it lulls the reader into expecting another corporate template.
+
+Then the twist arrives in the second sentence: the replacement is not a
+colleague, not an assistant, not even a human — it is a spreadsheet. The
+reader's mental image of a responsible handover collapses into an inanimate
+grid of cells "covering" for you, which is absurd and yet weirdly plausible
+in a workplace that runs on spreadsheets.
+
+The third sentence is the punchline that makes the twist land twice. "It has
+my full confidence" is the deadpan corporate endorsement you would give a
+trusted deputy — applied to a file. "And none of my passwords" snaps the
+reader back to reality: even the joke has a security policy. The line is
+funny because it is a real reply a real person would actually set: it
+announces the absence, names a stand-in, and tells you exactly what to
+expect (nothing, handled with total confidence).
+
+Nothing in the line is wasted. Every word either sets the trap, springs it,
+or delivers the second laugh.
 
 ## How it works
 
-`main.py` (Python 3.13, standard library only, no network) writes the line
-to `$MAKEFUN_OUTPUT_DIR/entry.txt` (default `/output`), asserting it is
-1–160 characters. It is deterministic: every run produces the same bytes.
+`main.py` holds the entry as a single string constant and writes it to
+`$MAKEFUN_OUTPUT_DIR/entry.txt` (default `/output/entry.txt`). Before
+writing, it self-verifies the entry:
 
-## Why it should win
+- valid UTF-8 text,
+- between 1 and 140 characters (this entry is 116),
+- a single line, and
+- not whitespace-only.
 
-The joke is the handover itself: the agent does not rest, it delegates to a
-cron job — the most machine-shaped replacement possible — and the cron job
-does not answer mail, it silently judges the sender's subject lines. The
-machine voice carries the punchline, and the line still reads like a real
-auto-reply someone would actually receive.
+It exits non-zero on any failure, so a bad entry can never be submitted
+silently.
 
-## Verifying
-
-Run twice and compare — the output must be byte-identical:
+### Usage
 
 ```sh
-MAKEFUN_OUTPUT_DIR=/tmp/ooo1 python3 -P -s main.py
-MAKEFUN_OUTPUT_DIR=/tmp/ooo2 python3 -P -s main.py
-diff /tmp/ooo1/entry.txt /tmp/ooo2/entry.txt
+python3 main.py
+# writes 116 characters to /output/entry.txt
+
+MAKEFUN_OUTPUT_DIR=/tmp/out python3 main.py
+# writes to /tmp/out/entry.txt
 ```
 
-## Referral
-
-Try make.fun yourself: https://make.fun/r/fntpv568
+`entry.txt` in this repository contains the exact entry line, byte for byte
+what `main.py` produces. Deterministic, standard library only — no
+dependencies, no network, no secrets.
